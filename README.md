@@ -69,6 +69,16 @@ local allData = dataManager:GetAll()
 dataManager:Clear()
 ```
 
+
+## UI Example
+
+We've provided an example of how to use LuaDataManager with a UI library (Orion UI Library in this case). You can find this example in the `UIExample.lua` file. This example demonstrates:
+
+- How to initialize the data manager
+- How to create UI elements that interact with the data manager
+- How to use various methods of the data manager within UI callbacks
+
+
 ## API Reference
 
 - `DataManager.new(folderName, fileName, defaultData)`: Create a new data manager instance
