@@ -19,10 +19,8 @@ To use LuaDataManager in your project, simply copy the `DataManager.lua` file in
 For Roblox projects, you can load it directly from this GitHub repository:
 
 ```lua
-local DataManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/YourGithubUsername/LuaDataManager/main/DataManager.lua"))()
+local DataManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/tozxart/LuaDataManager/main/DataManager.lua"))()
 ```
-
-Replace `YourGithubUsername` with your actual GitHub username.
 
 ## Usage
 
