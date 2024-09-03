@@ -1,11 +1,13 @@
 # LuaDataManager
 
-LuaDataManager is a robust and flexible data management module for Lua projects, with a focus on game development environments. It provides an easy-to-use interface for saving, loading, and manipulating persistent data, making it ideal for storing user settings, game progress, and other types of data that need to persist between sessions.
+LuaDataManager is a robust and flexible data management module for Lua projects, with support for both Roblox and standard Lua environments. It provides an easy-to-use interface for saving, loading, and manipulating persistent data, making it ideal for storing user settings, game progress, and other types of data that need to persist between sessions.
 
 ## Features
 
 - Easy-to-use API for data management
 - Automatic JSON encoding and decoding
+- Support for both Roblox and standard Lua environments
+- Customizable file systems
 - Error handling and input validation
 - Data integrity checks
 - Support for default values
@@ -69,7 +71,6 @@ local allData = dataManager:GetAll()
 dataManager:Clear()
 ```
 
-
 ## UI Example
 
 We've provided an example of how to use LuaDataManager with a UI library (Orion UI Library in this case). You can find this example in the `UIExample.lua` file. This example demonstrates:
@@ -78,6 +79,25 @@ We've provided an example of how to use LuaDataManager with a UI library (Orion 
 - How to create UI elements that interact with the data manager
 - How to use various methods of the data manager within UI callbacks
 
+## Customizing File Systems
+
+LuaDataManager supports custom file systems. You can set a custom file system using the `setFileSystem` function:
+
+```lua
+local customFileSystem = {
+    writeFile = function(fileName, data)
+        -- Custom implementation for writing data to a file
+    end,
+    readFile = function(fileName)
+        -- Custom implementation for reading data from a file
+    end,
+    -- ... other file system functions ...
+}
+
+DataManager.setFileSystem(customFileSystem)
+```
+
+The module comes with built-in support for Roblox and standard Lua file systems.
 
 ## API Reference
 
@@ -91,6 +111,11 @@ We've provided an example of how to use LuaDataManager with a UI library (Orion 
 - `GetAll()`: Get all current data
 - `Delete(key)`: Remove a specific key-value pair
 - `Save()`: Manually save data (automatically called after changes)
+- `setFileSystem(customFileSystem)`: Set a custom file system implementation
+
+## Error Handling
+
+LuaDataManager includes built-in error handling for JSON encoding and decoding operations. It will warn users of any errors that occur during these processes.
 
 ## Contributing
 

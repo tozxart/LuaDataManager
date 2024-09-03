@@ -1,9 +1,36 @@
 -- Load the Rayfield UI Library
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/tozxart/The-Intruders/main/ArrayFieldMain.lua'))()
+local Rayfield = loadstring(game:HttpGet(
+    'https://raw.githubusercontent.com/tozxart/The-Intruders/main/ArrayFieldMain.lua'))())
 
 -- Load the enhanced data module
 local DataModule = loadstring(game:HttpGet(
-    "https://raw.githubusercontent.com/tozxart/LuaDataManager/main/DataManager.lua"))()
+    "https://raw.githubusercontent.com/tozxart/LuaDataManager/main/DataManager.lua"))())
+
+-- Available file systems
+local RobloxFileSystem = {
+    readFile = readfile,
+    writeFile = writefile,
+    appendFile = appendfile,
+    isFile = isfile,
+    isFolder = isfolder,
+    makeFolder = makefolder,
+    deleteFolder = delfolder,
+    deleteFile = delfile,
+    listFiles = listfiles
+}
+
+local LuaFileSystem = {
+    -- ... (existing LuaFileSystem implementation)
+}
+
+-- Set the file system to Roblox (for Roblox environment)
+DataModule.setFileSystem(RobloxFileSystem)
+
+-- Note: You can create custom file systems or extend existing ones
+-- Example of extending RobloxFileSystem:
+-- local CustomFileSystem = table.clone(RobloxFileSystem)
+-- CustomFileSystem.customFunction = function() ... end
+-- DataModule.setFileSystem(CustomFileSystem)
 
 -- Define default data
 local defaultData = {
@@ -116,3 +143,66 @@ end
 
 -- Example of using the Delete method
 PlayerData:Delete("TemporarySetting")
+
+-- Example of using the Update method
+MainTab:CreateButton({
+    Name = "Update Multiple Settings",
+    Info = "Updates multiple settings at once",
+    Interact = "Click",
+    Callback = function()
+        PlayerData:Update({
+            AutoTrial = true,
+            FarmOnTarget = true,
+            SavedFarmPosition = "10, 20, 30"
+        })
+        Rayfield:Notify({
+            Title = "Settings Updated",
+            Content = "Multiple settings have been updated",
+            Duration = 3,
+            Image = 4483362458
+        })
+        -- Update UI elements to reflect new values
+        Rayfield:SetValue("AutoFarmToggle", PlayerData:Get("FarmOnTarget"))
+    end
+})
+
+-- Add explanations about DataModule features
+local InfoSection = MainTab:CreateSection("DataModule Info")
+
+MainTab:CreateParagraph({
+    Title = "About DataModule",
+    Content = [[
+DataModule is a flexible data management system that supports both Roblox and standard Lua environments.
+
+Key features:
+1. Easy-to-use API for data management
+2. Automatic JSON encoding and decoding
+3. Support for custom file systems
+4. Error handling and input validation
+5. Data integrity checks
+6. Support for default values
+7. Methods for resetting to defaults, clearing data, and checking for existing keys
+
+You can extend or customize the file system by creating your own implementation and using the setFileSystem function.
+    ]]
+})
+
+-- Example of error handling
+MainTab:CreateButton({
+    Name = "Test Error Handling",
+    Info = "Attempts to set an invalid value",
+    Interact = "Click",
+    Callback = function()
+        local success, error = pcall(function()
+            PlayerData:Set("InvalidKey", {[{}] = "InvalidValue"})
+        end)
+        if not success then
+            Rayfield:Notify({
+                Title = "Error Handled",
+                Content = "Attempted to set an invalid value. Error: " .. tostring(error),
+                Duration = 5,
+                Image = 4483362458
+            })
+        end
+    end
+})
